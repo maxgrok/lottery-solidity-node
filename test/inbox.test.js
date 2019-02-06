@@ -4,6 +4,8 @@ const Web3 = require('web3'); //uppercase Web3 notice this, is a constructor use
 
 const web3 = new Web3(ganache.provider()); //instance of Web3 and connect to local test network (ganache)
 
+const { interface, bytecode } = require('../compile'); //import the interface and bytecode of the contract
+
 /* class Car {
     park(){
         return "stopped";
@@ -32,3 +34,23 @@ describe('Car', ()=>{ //groups together 'it' statements to test Car class and me
     })
 }); // first string passed in is just something to see what is on our testing report so that we can know what we're testing
 */
+
+//fetching Ganache accounts
+let accounts;
+let inbox;
+
+beforeEach(async()=>{ //add async
+    // Get a list of all accounts
+    accounts = await web3.eth.getAccounts(); //every function that we call with web3 is async in nature, always returning a promise
+
+    // Use one of those account to deploy the contract
+    inbox = await new web3.eth.Contract(JSON.parse(interface))
+    .deploy({ data: bytecode, arguments: ['Hi there!'] })//initial argument is the bytecode of the contract, second argument
+    .send({ from: accounts[0], gas: '1000000' }) //specifies the account from which to deploy and gas to use for the deployment of the contract
+})
+
+describe('Inbox', () =>{
+    it('deploys a contract', () =>{
+        console.log(inbox); //replaced with inbox
+    });
+})
