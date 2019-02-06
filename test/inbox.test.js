@@ -41,13 +41,15 @@ describe('Car', ()=>{ //groups together 'it' statements to test Car class and me
 let accounts;
 let inbox;
 
+INITIAL_STRING = 'Hi there!';
+
 beforeEach(async()=>{ //add async
     // Get a list of all accounts
     accounts = await web3.eth.getAccounts(); //every function that we call with web3 is async in nature, always returning a promise
 
     // Use one of those account to deploy the contract
     inbox = await new web3.eth.Contract(JSON.parse(interface))
-    .deploy({ data: bytecode, arguments: ['Hi there!'] })//initial argument is the bytecode of the contract, second argument
+    .deploy({ data: bytecode, arguments: INITIAL_STRING })//initial argument is the bytecode of the contract, second argument
     .send({ from: accounts[0], gas: '1000000' }) //specifies the account from which to deploy and gas to use for the deployment of the contract
 
     //ADD THIS ONE LINE RIGHT HERE!!!
@@ -59,7 +61,7 @@ describe('Inbox', () =>{
         assert.ok(inbox.options.address); // ok is a part of the node standard library, makes assertion that it is a value that it exists.  looking up if it exists then the contract has been successfully deployed. if it is a truthy value, then the test will pass because a string is a truthy value. 
     });
     it('has a default message', async () =>{
-        const message = await inbox.methods.message().call();
-        assert.equal(message, "Hi there!");
+        const message = await inbox.methods.message().call(); //instance of the contract, property called methods (object that contains all the public functions that exist within the contract), and call so that it is free to test and instantaneous, 1st set of parantheses is the method call, 2nd set of parentheses need to use call function, customizes exactly how the function gets called  
+        assert.equal(message, INITIAL_STRING); 
     });
 });
