@@ -51,6 +51,6 @@ beforeEach(async()=>{ //add async
 
 describe('Inbox', () =>{
     it('deploys a contract', () =>{
-        console.log(inbox); //replaced with inbox
+        assert.ok(inbox.options.address); // ok is a part of the node standard library, makes assertion that it is a value that it exists.  looking up if it exists then the contract has been successfully deployed. if it is a truthy value, then the test will pass because a string is a truthy value. 
     });
 })
