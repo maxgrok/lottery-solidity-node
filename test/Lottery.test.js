@@ -61,4 +61,29 @@ describe('Lottery Contract', ()=>{
         assert.equal(accounts[2], players[2]);
         assert.equal(3, players.length); //value that it should be first, then value that it is
     });
+    
+    it('requires a minimum amount of ether to enter', async ()=>{
+        try{ // for use only with async (try-catch that is)
+            await lottery.methods.enter().send({
+            from: accounts[0],
+            value: 200 //200 wei not converting it into ether. just testing less than 0.01 ether 
+            });
+            assert(false); // error is not thrown then fails test if the above statement does not throw an error. 
+        } catch(err){ //if thrown an error do the following: 
+            assert(err); //check for truthiness
+            console.log('not enough Ether sent to enter Lottery');
+        }
+    });
+
+    it('only manager can call pickWinner', async () =>{
+        try {
+            lottery.methods.pickWinner().send({
+                from: accounts[1] 
+            })
+            assert(false); //auto fail the test no matter what if getting this line of code
+        } catch(err){
+            assert(err);
+            
+        }
+    })
 })
