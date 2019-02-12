@@ -38,4 +38,27 @@ describe('Lottery Contract', ()=>{
         assert.equal(accounts[0], players[0]);
         assert.equal(1, players.length); //value that it should be first, then value that it is
     });
+    it('allows multiple accounts to enter', async () =>{
+        await lottery.methods.enter().send({
+            from: accounts[0],
+            value: web3.utils.toWei('0.02', 'ether') // use the utility from web3 amount in wei 
+        });
+        await lottery.methods.enter().send({
+            from: accounts[1],
+            value: web3.utils.toWei('0.02', 'ether') // use the utility from web3 amount in wei 
+        });
+        await lottery.methods.enter().send({
+            from: accounts[2],
+            value: web3.utils.toWei('0.02', 'ether') // use the utility from web3 amount in wei 
+        });
+
+        const players = await lottery.methods.getPlayers().call({
+            from: accounts[0]
+        })  // gets the players in the lottery contract, only element in the array should be the address as 0 index
+
+        assert.equal(accounts[0], players[0]);
+        assert.equal(accounts[1], players[1]);
+        assert.equal(accounts[2], players[2]);
+        assert.equal(3, players.length); //value that it should be first, then value that it is
+    });
 })
