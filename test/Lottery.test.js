@@ -21,4 +21,21 @@ describe('Lottery Contract', ()=>{
     it('deploys a contract', () =>{
         assert.ok(lottery.options.address); // asserts that there is an address that exists
     });
+
+    //what tests should we write? 
+    //whenever you start writing tests, ask what behavior do you really care about when you look at this contract? 
+    
+    // make sure that anytime someone calls enter() that their address gets added to the players address
+    it('allows one account to enter', async () =>{
+        await lottery.methods.enter().send({
+            from: accounts[0],
+            value: web3.utils.toWei('0.02', 'ether') // use the utility from web3 amount in wei 
+        });
+        const players = await lottery.methods.getPlayers().call({
+            from: accounts[0]
+        })  // gets the players in the lottery contract, only element in the array should be the address as 0 index
+
+        assert.equal(accounts[0], players[0]);
+        assert.equal(1, players.length); //value that it should be first, then value that it is
+    });
 })
