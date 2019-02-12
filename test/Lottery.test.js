@@ -83,7 +83,28 @@ describe('Lottery Contract', ()=>{
             assert(false); //auto fail the test no matter what if getting this line of code
         } catch(err){
             assert(err);
+
+        }
+    })
+    it('sends money to the winner and resets the players array', async () =>{
+        try { //entering in one player, not dealing with the randomness
+            await lottery.methods.enter().send({
+                from: accounts[0], 
+                value: web3.utils.toWei('2','ether'); 
+            });
+
+            const initialBalance = await web3.eth.getBalance(accounts[0]); //returns amount of ether in amounts of wei, takes in an address
+
+            await lottery.methods.pickWinner().send({
+                from: accounts[0]
+            });
+
+            const finalBalance = await web3.eth.getBalance(accounts[0]);
+
             
+            assert(false); //auto fail the test no matter what if getting this line of code
+        } catch(err){
+            assert(err);
         }
     })
 })
