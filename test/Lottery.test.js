@@ -103,10 +103,8 @@ describe('Lottery Contract', ()=>{
 
             const difference = finalBalance - initialBalance;
             
-            assert(difference > web3.utils.toWei('1.8', 'ether')); //1.8 allowing for some amount of gas cost
+            assert(difference > web3.utils.toWei('1.8', 'ether')) //1.8 allowing for some amount of gas cost
             
             assert.equal(0, players.length)
-            assert.equal()
-            assert(false); //auto fail the test no matter what if getting this line of code
     })
 })
