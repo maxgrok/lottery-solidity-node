@@ -90,7 +90,7 @@ describe('Lottery Contract', ()=>{
      //entering in one player, not dealing with the randomness
             await lottery.methods.enter().send({
                 from: accounts[0], 
-                value: web3.utils.toWei('2','ether'); 
+                value: web3.utils.toWei('2','ether')
             });
 
             const initialBalance = await web3.eth.getBalance(accounts[0]); //returns amount of ether in amounts of wei, takes in an address
@@ -104,7 +104,5 @@ describe('Lottery Contract', ()=>{
             const difference = finalBalance - initialBalance;
             
             assert(difference > web3.utils.toWei('1.8', 'ether')) //1.8 allowing for some amount of gas cost
-            
-            assert.equal(0, players.length)
     })
 })
