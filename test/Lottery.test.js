@@ -87,7 +87,7 @@ describe('Lottery Contract', ()=>{
         }
     })
     it('sends money to the winner and resets the players array', async () =>{
-        try { //entering in one player, not dealing with the randomness
+     //entering in one player, not dealing with the randomness
             await lottery.methods.enter().send({
                 from: accounts[0], 
                 value: web3.utils.toWei('2','ether'); 
@@ -105,10 +105,8 @@ describe('Lottery Contract', ()=>{
             
             assert(difference > web3.utils.toWei('1.8', 'ether')); //1.8 allowing for some amount of gas cost
             
-
+            assert.equal(0, players.length)
+            assert.equal()
             assert(false); //auto fail the test no matter what if getting this line of code
-        } catch(err){
-            assert(err);
-        }
     })
 })
