@@ -101,7 +101,11 @@ describe('Lottery Contract', ()=>{
 
             const finalBalance = await web3.eth.getBalance(accounts[0]);
 
+            const difference = finalBalance - initialBalance;
             
+            assert(difference > web3.utils.toWei('1.8', 'ether')); //1.8 allowing for some amount of gas cost
+            
+
             assert(false); //auto fail the test no matter what if getting this line of code
         } catch(err){
             assert(err);
